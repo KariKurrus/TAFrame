@@ -8,7 +8,7 @@ namespace TAFrame.Core.Base
     public abstract class BasePage<T> where T : BasePage<T>
     {
         protected IWebDriver Driver => DriverFactory.GetDriver();
-        protected virtual string BaseUrl => "https://practicetestautomation.com/";
+        protected virtual string BaseUrl => "https://rozetka.com.ua/";
         protected BasePage()
         {
             InitElements();
@@ -28,9 +28,17 @@ namespace TAFrame.Core.Base
             }
         }
 
+        public T NavigateToBase()
+        {
+            Driver.Navigate().GoToUrl(BaseUrl);
+
+            return (T)this;
+        }
+
         public T NavigateTo()
         {
             var urlAttr = GetType().GetCustomAttribute<PageUrlAttribute>();
+
             if (urlAttr != null)
             {
                 Driver.Navigate().GoToUrl(BaseUrl + urlAttr.Url);

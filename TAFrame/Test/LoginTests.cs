@@ -9,6 +9,7 @@ namespace TAFrame.Test
         public void ExampleTest()
         {
             var loginPage = new LoginPage().NavigateToBase();
+            loginPage.Login("password", "login");
         }
     }
 }

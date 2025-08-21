@@ -24,6 +24,24 @@ namespace TAFrame.Core.Base
                 return el;
             }
         }
+        public IWebElement WaitUntilElelemntIsVisible(int timeoutInSeconds = 10)
+        {
+            Log($"Waiting for element to be visible: {_locator} for up to {timeoutInSeconds} seconds");
+            var wait = new OpenQA.Selenium.Support.UI.WebDriverWait(Driver, TimeSpan.FromSeconds(timeoutInSeconds));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(_locator));
+            Log($"Element is now visible: {_locator}");
+            return Element;
+        }
+
+        public IWebElement WaitUntilElelemntIsClickable(int timeoutInSeconds = 10)
+        {
+            Log($"Waiting for element to be visible: {_locator} for up to {timeoutInSeconds} seconds");
+            var wait = new OpenQA.Selenium.Support.UI.WebDriverWait(Driver, TimeSpan.FromSeconds(timeoutInSeconds));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(_locator));
+            Log($"Element is now visible: {_locator}");
+            return Element;
+        }
+
 
         public void Click()
         {
@@ -31,7 +49,7 @@ namespace TAFrame.Core.Base
             Element.Click();
         }
 
-        public void Type(string text)
+        public void SendText(string text)
         {
             Log($"Typing '{text}' into element: {_locator}");
             Element.SendKeys(text);

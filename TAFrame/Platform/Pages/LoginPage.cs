@@ -1,10 +1,10 @@
 ﻿using TAFrame.Core.Attribute;
 using TAFrame.Core.Base;
+using TAFrame.Core.Driver;
 using TAFrame.Core.Enums;
 
 namespace TAFrame.Platform.Pages
 {
-    [PageUrl("practice-test-login/")]
     public class LoginPage : BasePage<LoginPage>
     {
         [Locator(How.Id, "username")]
@@ -13,14 +13,25 @@ namespace TAFrame.Platform.Pages
         [Locator(How.Id, "password")]
         public BaseElement PasswordField { get; private set; }
 
-        [Locator(How.Id, "submit")]
+        [Locator(How.Id, "Login")]
         public BaseElement LoginButton { get; private set; }
+
+        [Locator(How.XPath, "//*[@type='submit']")]
+        public BaseElement SubmitButton { get; private set; }
 
         public void Login(string username, string password)
         {
-            UsernameField.Type(username);
-            PasswordField.Type(password);
+            LoginButton.WaitUntilElelemntIsClickable();
+
+            UsernameField.SendText(username);
+            PasswordField.SendText(password);
             LoginButton.Click();
+        }
+
+        public void AssertSubmit()
+        {
+            SubmitButton.WaitUntilElelemntIsClickable();
+            Assert.AreEqual("Підтвердити", SubmitButton.Text, "Submit button text does not match expected value.");
         }
     }
 }
